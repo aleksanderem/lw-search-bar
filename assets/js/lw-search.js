@@ -737,13 +737,17 @@
         stickyBar.className = 'lw-sticky-bar';
         stickyBar.style.display = 'none';
 
+        var stickyInner = document.createElement('div');
+        stickyInner.className = 'lw-sticky-bar__inner';
+        stickyBar.appendChild(stickyInner);
+
         var stickyLeft = document.createElement('div');
         stickyLeft.className = 'lw-sticky-bar__left';
-        stickyBar.appendChild(stickyLeft);
+        stickyInner.appendChild(stickyLeft);
 
         var stickyRight = document.createElement('div');
         stickyRight.className = 'lw-sticky-bar__right';
-        stickyBar.appendChild(stickyRight);
+        stickyInner.appendChild(stickyRight);
 
         var stickyFilterBtn = document.createElement('button');
         stickyFilterBtn.type = 'button';

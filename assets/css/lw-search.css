@@ -1156,18 +1156,21 @@
 .lw-sticky-bar {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 1200px;
+    left: 0;
+    right: 0;
     z-index: 9990;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
     background: #fff;
     border-top: 1px solid #E1D1B8;
     box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.lw-sticky-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
 }
 
 .lw-sticky-bar__left {
