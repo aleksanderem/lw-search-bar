@@ -1495,11 +1495,28 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'selectors'  => ['.lw-sticky-bar__inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
 
+        // ── Toolbar buttons (status, sort) ──
+        $this->add_control('sticky_toolbar_heading', [
+            'label'     => 'Przyciski filtrów w pasku',
+            'type'      => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+        ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Typography::get_type(), [
+            'name'     => 'sticky_toolbar_typography',
+            'selector' => '.lw-sticky-bar .lw-toolbar-btn',
+        ]);
+
         // ── Przycisk Filtry ──
         $this->add_control('sticky_filter_heading', [
             'label'     => 'Przycisk Filtry',
             'type'      => \Elementor\Controls_Manager::HEADING,
             'separator' => 'before',
+        ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Typography::get_type(), [
+            'name'     => 'sticky_filter_typography',
+            'selector' => '.lw-sticky-bar__btn--filter',
         ]);
 
         $this->add_control('sticky_filter_border_radius', [
@@ -1588,6 +1605,11 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'label'     => 'Przycisk Szukaj',
             'type'      => \Elementor\Controls_Manager::HEADING,
             'separator' => 'before',
+        ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Typography::get_type(), [
+            'name'     => 'sticky_search_typography',
+            'selector' => '.lw-sticky-bar__btn--search',
         ]);
 
         $this->add_control('sticky_search_border_radius', [
