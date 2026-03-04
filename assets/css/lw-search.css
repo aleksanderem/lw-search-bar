@@ -1036,15 +1036,15 @@
 
 .lw-drawer {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    max-height: 85vh;
+    top: 0;
+    right: 0;
+    width: 440px;
+    height: 100vh;
     background: #fff;
-    border-radius: 16px 16px 0 0;
-    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 0;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
     z-index: 9999;
-    transform: translateY(100%);
+    transform: translateX(100%);
     transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
     overflow: hidden;
     display: flex;
@@ -1052,7 +1052,7 @@
 }
 
 .lw-drawer--open {
-    transform: translateY(0);
+    transform: translateX(0);
 }
 
 .lw-drawer__header {
@@ -1255,6 +1255,24 @@
 
 /* Tablet portrait */
 @media (max-width: 768px) {
+    /* Drawer: switch to bottom sheet on mobile */
+    .lw-drawer {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        height: auto;
+        max-height: 85vh;
+        border-radius: 16px 16px 0 0;
+        box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+        transform: translateY(100%);
+    }
+
+    .lw-drawer--open {
+        transform: translateY(0);
+    }
+
     /* Show drawer trigger, hide form + toolbar-left in main view */
     .lw-drawer-trigger {
         display: inline-flex !important;
