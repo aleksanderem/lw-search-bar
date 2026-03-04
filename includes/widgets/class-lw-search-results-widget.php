@@ -70,6 +70,16 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'description'  => 'Wyniki pokażą się dopiero po kliknięciu SZUKAJ.',
         ]);
 
+        $this->add_control('enable_sticky_bar', [
+            'label'        => 'Przypięty pasek na dole',
+            'type'         => \Elementor\Controls_Manager::SWITCHER,
+            'label_on'     => 'Tak',
+            'label_off'    => 'Nie',
+            'return_value' => 'yes',
+            'default'      => 'yes',
+            'description'  => 'Pasek z filtrami i sortowaniem pojawiający się po przewinięciu formularza.',
+        ]);
+
         $this->end_controls_section();
 
         // ── Style: Toolbar ──
@@ -1440,6 +1450,101 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
         ]);
 
         $this->end_controls_section();
+
+        // ── Style: Sticky bar ──
+        $this->start_controls_section('section_style_sticky_bar', [
+            'label'     => 'Przypięty pasek',
+            'tab'       => \Elementor\Controls_Manager::TAB_STYLE,
+            'condition' => ['enable_sticky_bar' => 'yes'],
+        ]);
+
+        $this->add_control('sticky_bar_bg', [
+            'label'   => 'Kolor tła',
+            'type'    => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+        ]);
+
+        $this->add_control('sticky_bar_border_color', [
+            'label'   => 'Kolor obramowania',
+            'type'    => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+        ]);
+
+        $this->add_control('sticky_bar_shadow', [
+            'label'   => 'Cień',
+            'type'    => \Elementor\Controls_Manager::TEXT,
+            'default' => '',
+            'description' => 'np. 0 -2px 12px rgba(0,0,0,0.08)',
+        ]);
+
+        $this->add_control('sticky_bar_padding', [
+            'label'   => 'Padding wewnętrzny',
+            'type'    => \Elementor\Controls_Manager::TEXT,
+            'default' => '',
+            'description' => 'np. 10px 20px',
+        ]);
+
+        $this->add_control('sticky_filter_heading', [
+            'label'     => 'Przycisk Filtry',
+            'type'      => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+        ]);
+
+        $this->add_control('sticky_filter_bg', [
+            'label'   => 'Kolor tła',
+            'type'    => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+        ]);
+
+        $this->add_control('sticky_filter_color', [
+            'label'   => 'Kolor tekstu',
+            'type'    => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+        ]);
+
+        $this->add_control('sticky_filter_bg_hover', [
+            'label'   => 'Kolor tła (hover)',
+            'type'    => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+        ]);
+
+        $this->add_control('sticky_filter_color_hover', [
+            'label'   => 'Kolor tekstu (hover)',
+            'type'    => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+        ]);
+
+        $this->add_control('sticky_search_heading', [
+            'label'     => 'Przycisk Szukaj',
+            'type'      => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+        ]);
+
+        $this->add_control('sticky_search_bg', [
+            'label'   => 'Kolor tła',
+            'type'    => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+        ]);
+
+        $this->add_control('sticky_search_color', [
+            'label'   => 'Kolor tekstu',
+            'type'    => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+        ]);
+
+        $this->add_control('sticky_search_bg_hover', [
+            'label'   => 'Kolor tła (hover)',
+            'type'    => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+        ]);
+
+        $this->add_control('sticky_search_color_hover', [
+            'label'   => 'Kolor tekstu (hover)',
+            'type'    => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+        ]);
+
+        $this->end_controls_section();
     }
 
     protected function render() {
@@ -1661,6 +1766,33 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
                 <p class="lw-no-results" id="lw-no-results" style="display:none;">Brak wyników spełniających kryteria.</p>
             </div>
 
+            <?php
+            // Output CSS custom properties for sticky bar styles
+            $sticky_vars = [];
+            $sticky_map = [
+                'sticky_bar_bg'             => '--lw-sticky-bg',
+                'sticky_bar_border_color'   => '--lw-sticky-border-color',
+                'sticky_bar_shadow'         => '--lw-sticky-shadow',
+                'sticky_bar_padding'        => '--lw-sticky-padding',
+                'sticky_filter_bg'          => '--lw-sticky-filter-bg',
+                'sticky_filter_color'       => '--lw-sticky-filter-color',
+                'sticky_filter_bg_hover'    => '--lw-sticky-filter-bg-hover',
+                'sticky_filter_color_hover' => '--lw-sticky-filter-color-hover',
+                'sticky_search_bg'          => '--lw-sticky-search-bg',
+                'sticky_search_color'       => '--lw-sticky-search-color',
+                'sticky_search_bg_hover'    => '--lw-sticky-search-bg-hover',
+                'sticky_search_color_hover' => '--lw-sticky-search-color-hover',
+            ];
+            foreach ($sticky_map as $key => $var) {
+                $val = $settings[$key] ?? '';
+                if ($val !== '') {
+                    $sticky_vars[] = esc_attr($var) . ':' . esc_attr($val);
+                }
+            }
+            if ($sticky_vars) : ?>
+            <style>:root{<?php echo implode(';', $sticky_vars); ?>}</style>
+            <?php endif; ?>
+
             <script>
             (function(){
                 <?php if ($default_status !== 'dostepne') : ?>
@@ -1668,6 +1800,9 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
                 <?php endif; ?>
                 <?php if ($hide_before) : ?>
                 window.lwHideBeforeSearch = true;
+                <?php endif; ?>
+                <?php if (($settings['enable_sticky_bar'] ?? 'yes') !== 'yes') : ?>
+                window.lwDisableStickyBar = true;
                 <?php endif; ?>
                 <?php if ($default_view !== 'grid') : ?>
                 window.lwDefaultView = <?php echo wp_json_encode($default_view); ?>;

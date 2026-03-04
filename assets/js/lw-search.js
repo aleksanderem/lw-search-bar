@@ -733,6 +733,7 @@
         overlay.addEventListener('click', closeDrawer);
 
         // ── Sticky bottom bar ──
+        if (!window.lwDisableStickyBar) {
         var stickyBar = document.createElement('div');
         stickyBar.className = 'lw-sticky-bar';
         stickyBar.style.display = 'none';
@@ -836,6 +837,7 @@
             }, { threshold: 0 });
             stickyObserver.observe(searchForm);
         }
+        } // end if !lwDisableStickyBar
     })();
 
     if (!hideBeforeSearch) doSearch();
