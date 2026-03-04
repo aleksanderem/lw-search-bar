@@ -759,11 +759,14 @@
 
         document.body.appendChild(stickyBar);
 
-        // Sort dropdown and view toggle references from toolbar
+        // References from toolbar
+        var statusDropdown = document.getElementById('lw-dropdown-status');
         var sortDropdown = document.getElementById('lw-dropdown-sort');
         var viewToggleEl = toolbar.querySelector('.lw-view-toggle');
 
-        // Placeholders for sort/view when moved to sticky bar
+        // Placeholders to remember original positions
+        var statusPlaceholder = document.createElement('div');
+        statusPlaceholder.style.display = 'none';
         var sortPlaceholder = document.createElement('div');
         sortPlaceholder.style.display = 'none';
         var viewPlaceholder = document.createElement('div');
@@ -772,6 +775,10 @@
         var stickyVisible = false;
 
         function moveToStickyBar() {
+            if (statusDropdown && statusDropdown.parentNode) {
+                statusDropdown.parentNode.insertBefore(statusPlaceholder, statusDropdown);
+                stickyLeft.appendChild(statusDropdown);
+            }
             if (sortDropdown && sortDropdown.parentNode) {
                 sortDropdown.parentNode.insertBefore(sortPlaceholder, sortDropdown);
                 stickyLeft.appendChild(sortDropdown);
@@ -783,6 +790,10 @@
         }
 
         function moveFromStickyBar() {
+            if (statusDropdown && statusPlaceholder.parentNode) {
+                statusPlaceholder.parentNode.insertBefore(statusDropdown, statusPlaceholder);
+                statusPlaceholder.parentNode.removeChild(statusPlaceholder);
+            }
             if (sortDropdown && sortPlaceholder.parentNode) {
                 sortPlaceholder.parentNode.insertBefore(sortDropdown, sortPlaceholder);
                 sortPlaceholder.parentNode.removeChild(sortPlaceholder);

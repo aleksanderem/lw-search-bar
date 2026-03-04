@@ -1156,8 +1156,10 @@
 .lw-sticky-bar {
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1200px;
     z-index: 9990;
     display: flex;
     align-items: center;
@@ -1178,6 +1180,12 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+/* Dropdowns inside sticky bar open upward */
+.lw-sticky-bar .lw-dropdown__menu {
+    top: auto;
+    bottom: calc(100% + 6px);
 }
 
 .lw-sticky-bar__btn {
