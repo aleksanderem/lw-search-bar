@@ -1606,6 +1606,32 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
         <?php
         $is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
 
+        // Output CSS custom properties for sticky bar styles (shared by editor and frontend)
+        $sticky_vars = [];
+        $sticky_map = [
+            'sticky_bar_bg'             => '--lw-sticky-bg',
+            'sticky_bar_border_color'   => '--lw-sticky-border-color',
+            'sticky_bar_shadow'         => '--lw-sticky-shadow',
+            'sticky_bar_padding'        => '--lw-sticky-padding',
+            'sticky_filter_bg'          => '--lw-sticky-filter-bg',
+            'sticky_filter_color'       => '--lw-sticky-filter-color',
+            'sticky_filter_bg_hover'    => '--lw-sticky-filter-bg-hover',
+            'sticky_filter_color_hover' => '--lw-sticky-filter-color-hover',
+            'sticky_search_bg'          => '--lw-sticky-search-bg',
+            'sticky_search_color'       => '--lw-sticky-search-color',
+            'sticky_search_bg_hover'    => '--lw-sticky-search-bg-hover',
+            'sticky_search_color_hover' => '--lw-sticky-search-color-hover',
+        ];
+        foreach ($sticky_map as $key => $var) {
+            $val = $settings[$key] ?? '';
+            if ($val !== '') {
+                $sticky_vars[] = esc_attr($var) . ':' . esc_attr($val);
+            }
+        }
+        if ($sticky_vars) {
+            echo '<style>:root{' . implode(';', $sticky_vars) . '}</style>';
+        }
+
         if ($is_editor) {
             // Render server-side preview with real data so styles are visible in editor
             $apartments = LW_Shortcode::get_all_apartments();
@@ -1743,6 +1769,44 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
                 </div>
                 <?php
             }
+
+            // Sticky bar preview in editor
+            if (($settings['enable_sticky_bar'] ?? 'yes') === 'yes') : ?>
+                <div class="lw-sticky-bar" style="position:relative; margin-top:24px;">
+                    <div class="lw-sticky-bar__inner">
+                        <div class="lw-sticky-bar__left">
+                            <div class="lw-dropdown">
+                                <button type="button" class="lw-toolbar-btn lw-toolbar-btn--active">
+                                    <span class="lw-toolbar-btn__label"><?php echo esc_html($status_label); ?></span>
+                                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </button>
+                            </div>
+                            <div class="lw-dropdown">
+                                <button type="button" class="lw-toolbar-btn">
+                                    <span class="lw-toolbar-btn__label">Sortowanie</span>
+                                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </button>
+                            </div>
+                            <div class="lw-view-toggle">
+                                <button type="button" class="lw-view-btn lw-view-btn--active" data-view="grid">
+                                    <easier-icon name="grid-view" variant="stroke" size="18"></easier-icon>
+                                </button>
+                                <button type="button" class="lw-view-btn" data-view="table">
+                                    <easier-icon name="menu-01" variant="stroke" size="18"></easier-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="lw-sticky-bar__right">
+                            <button type="button" class="lw-sticky-bar__btn lw-sticky-bar__btn--filter">
+                                <easier-icon name="filter" variant="stroke" size="18"></easier-icon>
+                                Filtry
+                            </button>
+                            <button type="button" class="lw-sticky-bar__btn lw-sticky-bar__btn--search">SZUKAJ</button>
+                        </div>
+                    </div>
+                </div>
+            <?php endif;
+
         } else {
             // Frontend: empty containers populated by JS
             ?>
@@ -1765,33 +1829,6 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
                 </table>
                 <p class="lw-no-results" id="lw-no-results" style="display:none;">Brak wyników spełniających kryteria.</p>
             </div>
-
-            <?php
-            // Output CSS custom properties for sticky bar styles
-            $sticky_vars = [];
-            $sticky_map = [
-                'sticky_bar_bg'             => '--lw-sticky-bg',
-                'sticky_bar_border_color'   => '--lw-sticky-border-color',
-                'sticky_bar_shadow'         => '--lw-sticky-shadow',
-                'sticky_bar_padding'        => '--lw-sticky-padding',
-                'sticky_filter_bg'          => '--lw-sticky-filter-bg',
-                'sticky_filter_color'       => '--lw-sticky-filter-color',
-                'sticky_filter_bg_hover'    => '--lw-sticky-filter-bg-hover',
-                'sticky_filter_color_hover' => '--lw-sticky-filter-color-hover',
-                'sticky_search_bg'          => '--lw-sticky-search-bg',
-                'sticky_search_color'       => '--lw-sticky-search-color',
-                'sticky_search_bg_hover'    => '--lw-sticky-search-bg-hover',
-                'sticky_search_color_hover' => '--lw-sticky-search-color-hover',
-            ];
-            foreach ($sticky_map as $key => $var) {
-                $val = $settings[$key] ?? '';
-                if ($val !== '') {
-                    $sticky_vars[] = esc_attr($var) . ':' . esc_attr($val);
-                }
-            }
-            if ($sticky_vars) : ?>
-            <style>:root{<?php echo implode(';', $sticky_vars); ?>}</style>
-            <?php endif; ?>
 
             <script>
             (function(){
