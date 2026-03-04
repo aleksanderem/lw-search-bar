@@ -1495,27 +1495,11 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'selectors'  => ['.lw-sticky-bar__inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
 
+        // ── Przycisk Filtry ──
         $this->add_control('sticky_filter_heading', [
             'label'     => 'Przycisk Filtry',
             'type'      => \Elementor\Controls_Manager::HEADING,
             'separator' => 'before',
-        ]);
-
-        $this->add_control('sticky_filter_bg', [
-            'label'     => 'Kolor tła',
-            'type'      => \Elementor\Controls_Manager::COLOR,
-            'selectors' => ['.lw-sticky-bar__btn--filter' => 'background-color: {{VALUE}};'],
-        ]);
-
-        $this->add_control('sticky_filter_color', [
-            'label'     => 'Kolor tekstu',
-            'type'      => \Elementor\Controls_Manager::COLOR,
-            'selectors' => ['.lw-sticky-bar__btn--filter' => 'color: {{VALUE}};'],
-        ]);
-
-        $this->add_group_control(\Elementor\Group_Control_Border::get_type(), [
-            'name'     => 'sticky_filter_border',
-            'selector' => '.lw-sticky-bar__btn--filter',
         ]);
 
         $this->add_control('sticky_filter_border_radius', [
@@ -1539,51 +1523,71 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'selectors'  => ['.lw-sticky-bar__btn--filter' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
 
-        $this->add_control('sticky_filter_hover_heading', [
-            'label'     => 'Hover',
-            'type'      => \Elementor\Controls_Manager::HEADING,
-            'separator' => 'before',
+        $this->start_controls_tabs('sticky_filter_tabs');
+
+        $this->start_controls_tab('sticky_filter_tab_normal', [
+            'label' => 'Normalny',
+        ]);
+
+        $this->add_control('sticky_filter_bg', [
+            'label'     => 'Kolor tła',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--filter' => 'background-color: {{VALUE}};'],
+        ]);
+
+        $this->add_control('sticky_filter_color', [
+            'label'     => 'Kolor tekstu',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--filter' => 'color: {{VALUE}};'],
+        ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Border::get_type(), [
+            'name'     => 'sticky_filter_border',
+            'selector' => '.lw-sticky-bar__btn--filter',
+        ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Box_Shadow::get_type(), [
+            'name'     => 'sticky_filter_shadow',
+            'selector' => '.lw-sticky-bar__btn--filter',
+        ]);
+
+        $this->end_controls_tab();
+
+        $this->start_controls_tab('sticky_filter_tab_hover', [
+            'label' => 'Hover',
         ]);
 
         $this->add_control('sticky_filter_bg_hover', [
-            'label'     => 'Kolor tła (hover)',
+            'label'     => 'Kolor tła',
             'type'      => \Elementor\Controls_Manager::COLOR,
             'selectors' => ['.lw-sticky-bar__btn--filter:hover' => 'background-color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_filter_color_hover', [
-            'label'     => 'Kolor tekstu (hover)',
+            'label'     => 'Kolor tekstu',
             'type'      => \Elementor\Controls_Manager::COLOR,
             'selectors' => ['.lw-sticky-bar__btn--filter:hover' => 'color: {{VALUE}};'],
         ]);
 
-        $this->add_control('sticky_filter_border_color_hover', [
-            'label'     => 'Kolor obramowania (hover)',
-            'type'      => \Elementor\Controls_Manager::COLOR,
-            'selectors' => ['.lw-sticky-bar__btn--filter:hover' => 'border-color: {{VALUE}};'],
+        $this->add_group_control(\Elementor\Group_Control_Border::get_type(), [
+            'name'     => 'sticky_filter_border_hover',
+            'selector' => '.lw-sticky-bar__btn--filter:hover',
         ]);
 
+        $this->add_group_control(\Elementor\Group_Control_Box_Shadow::get_type(), [
+            'name'     => 'sticky_filter_shadow_hover',
+            'selector' => '.lw-sticky-bar__btn--filter:hover',
+        ]);
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+        // ── Przycisk Szukaj ──
         $this->add_control('sticky_search_heading', [
             'label'     => 'Przycisk Szukaj',
             'type'      => \Elementor\Controls_Manager::HEADING,
             'separator' => 'before',
-        ]);
-
-        $this->add_control('sticky_search_bg', [
-            'label'     => 'Kolor tła',
-            'type'      => \Elementor\Controls_Manager::COLOR,
-            'selectors' => ['.lw-sticky-bar__btn--search' => 'background-color: {{VALUE}};'],
-        ]);
-
-        $this->add_control('sticky_search_color', [
-            'label'     => 'Kolor tekstu',
-            'type'      => \Elementor\Controls_Manager::COLOR,
-            'selectors' => ['.lw-sticky-bar__btn--search' => 'color: {{VALUE}};'],
-        ]);
-
-        $this->add_group_control(\Elementor\Group_Control_Border::get_type(), [
-            'name'     => 'sticky_search_border',
-            'selector' => '.lw-sticky-bar__btn--search',
         ]);
 
         $this->add_control('sticky_search_border_radius', [
@@ -1607,29 +1611,65 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'selectors'  => ['.lw-sticky-bar__btn--search' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
 
-        $this->add_control('sticky_search_hover_heading', [
-            'label'     => 'Hover',
-            'type'      => \Elementor\Controls_Manager::HEADING,
-            'separator' => 'before',
+        $this->start_controls_tabs('sticky_search_tabs');
+
+        $this->start_controls_tab('sticky_search_tab_normal', [
+            'label' => 'Normalny',
+        ]);
+
+        $this->add_control('sticky_search_bg', [
+            'label'     => 'Kolor tła',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--search' => 'background-color: {{VALUE}};'],
+        ]);
+
+        $this->add_control('sticky_search_color', [
+            'label'     => 'Kolor tekstu',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--search' => 'color: {{VALUE}};'],
+        ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Border::get_type(), [
+            'name'     => 'sticky_search_border',
+            'selector' => '.lw-sticky-bar__btn--search',
+        ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Box_Shadow::get_type(), [
+            'name'     => 'sticky_search_shadow',
+            'selector' => '.lw-sticky-bar__btn--search',
+        ]);
+
+        $this->end_controls_tab();
+
+        $this->start_controls_tab('sticky_search_tab_hover', [
+            'label' => 'Hover',
         ]);
 
         $this->add_control('sticky_search_bg_hover', [
-            'label'     => 'Kolor tła (hover)',
+            'label'     => 'Kolor tła',
             'type'      => \Elementor\Controls_Manager::COLOR,
             'selectors' => ['.lw-sticky-bar__btn--search:hover' => 'background-color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_search_color_hover', [
-            'label'     => 'Kolor tekstu (hover)',
+            'label'     => 'Kolor tekstu',
             'type'      => \Elementor\Controls_Manager::COLOR,
             'selectors' => ['.lw-sticky-bar__btn--search:hover' => 'color: {{VALUE}};'],
         ]);
 
-        $this->add_control('sticky_search_border_color_hover', [
-            'label'     => 'Kolor obramowania (hover)',
-            'type'      => \Elementor\Controls_Manager::COLOR,
-            'selectors' => ['.lw-sticky-bar__btn--search:hover' => 'border-color: {{VALUE}};'],
+        $this->add_group_control(\Elementor\Group_Control_Border::get_type(), [
+            'name'     => 'sticky_search_border_hover',
+            'selector' => '.lw-sticky-bar__btn--search:hover',
         ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Box_Shadow::get_type(), [
+            'name'     => 'sticky_search_shadow_hover',
+            'selector' => '.lw-sticky-bar__btn--search:hover',
+        ]);
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
 
         $this->end_controls_section();
     }
