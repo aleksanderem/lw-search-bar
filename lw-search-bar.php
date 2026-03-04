@@ -18,6 +18,13 @@ define('LW_SEARCH_GITHUB_REPO', 'alexliskdev/lw-search-bar');
 require_once LW_SEARCH_DIR . 'includes/class-lw-shortcode.php';
 require_once LW_SEARCH_DIR . 'includes/class-lw-github-updater.php';
 
+// Register frontend assets early so Elementor can enqueue them via get_style_depends/get_script_depends
+add_action('wp_enqueue_scripts', function () {
+    wp_register_style('lw-search-css', LW_SEARCH_URL . 'assets/css/lw-search.css', [], LW_SEARCH_VERSION);
+    wp_register_script('lw-search-js', LW_SEARCH_URL . 'assets/js/lw-search.js', [], LW_SEARCH_VERSION, true);
+    wp_register_script('easiericons-sdk', 'https://ezicons.com/sdk.js', [], null, false);
+}, 5);
+
 // Shortcode
 add_action('init', function () {
     new LW_Shortcode();

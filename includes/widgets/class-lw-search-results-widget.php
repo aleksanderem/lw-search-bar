@@ -23,6 +23,14 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
         return ['results', 'apartments', 'grid', 'table', 'lw'];
     }
 
+    public function get_style_depends() {
+        return ['lw-search-css'];
+    }
+
+    public function get_script_depends() {
+        return ['easiericons-sdk', 'lw-search-js'];
+    }
+
     protected function _register_controls() {
         // ── Content ──
         $this->start_controls_section('section_content', [
