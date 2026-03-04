@@ -1459,29 +1459,27 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
         ]);
 
         $this->add_control('sticky_bar_bg', [
-            'label'   => 'Kolor tła',
-            'type'    => \Elementor\Controls_Manager::COLOR,
-            'default' => '',
+            'label'     => 'Kolor tła',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar' => 'background-color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_bar_border_color', [
-            'label'   => 'Kolor obramowania',
-            'type'    => \Elementor\Controls_Manager::COLOR,
-            'default' => '',
+            'label'     => 'Kolor obramowania',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar' => 'border-top-color: {{VALUE}};'],
         ]);
 
-        $this->add_control('sticky_bar_shadow', [
-            'label'   => 'Cień',
-            'type'    => \Elementor\Controls_Manager::TEXT,
-            'default' => '',
-            'description' => 'np. 0 -2px 12px rgba(0,0,0,0.08)',
+        $this->add_group_control(\Elementor\Group_Control_Box_Shadow::get_type(), [
+            'name'     => 'sticky_bar_shadow',
+            'selector' => '.lw-sticky-bar',
         ]);
 
-        $this->add_control('sticky_bar_padding', [
-            'label'   => 'Padding wewnętrzny',
-            'type'    => \Elementor\Controls_Manager::TEXT,
-            'default' => '',
-            'description' => 'np. 10px 20px',
+        $this->add_responsive_control('sticky_bar_padding', [
+            'label'      => 'Padding',
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', 'em'],
+            'selectors'  => ['.lw-sticky-bar__inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
 
         $this->add_control('sticky_filter_heading', [
@@ -1491,27 +1489,27 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
         ]);
 
         $this->add_control('sticky_filter_bg', [
-            'label'   => 'Kolor tła',
-            'type'    => \Elementor\Controls_Manager::COLOR,
-            'default' => '',
+            'label'     => 'Kolor tła',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--filter' => 'background-color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_filter_color', [
-            'label'   => 'Kolor tekstu',
-            'type'    => \Elementor\Controls_Manager::COLOR,
-            'default' => '',
+            'label'     => 'Kolor tekstu',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--filter' => 'color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_filter_bg_hover', [
-            'label'   => 'Kolor tła (hover)',
-            'type'    => \Elementor\Controls_Manager::COLOR,
-            'default' => '',
+            'label'     => 'Kolor tła (hover)',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--filter:hover' => 'background-color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_filter_color_hover', [
-            'label'   => 'Kolor tekstu (hover)',
-            'type'    => \Elementor\Controls_Manager::COLOR,
-            'default' => '',
+            'label'     => 'Kolor tekstu (hover)',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--filter:hover' => 'color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_search_heading', [
@@ -1521,27 +1519,27 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
         ]);
 
         $this->add_control('sticky_search_bg', [
-            'label'   => 'Kolor tła',
-            'type'    => \Elementor\Controls_Manager::COLOR,
-            'default' => '',
+            'label'     => 'Kolor tła',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--search' => 'background-color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_search_color', [
-            'label'   => 'Kolor tekstu',
-            'type'    => \Elementor\Controls_Manager::COLOR,
-            'default' => '',
+            'label'     => 'Kolor tekstu',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--search' => 'color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_search_bg_hover', [
-            'label'   => 'Kolor tła (hover)',
-            'type'    => \Elementor\Controls_Manager::COLOR,
-            'default' => '',
+            'label'     => 'Kolor tła (hover)',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--search:hover' => 'background-color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_search_color_hover', [
-            'label'   => 'Kolor tekstu (hover)',
-            'type'    => \Elementor\Controls_Manager::COLOR,
-            'default' => '',
+            'label'     => 'Kolor tekstu (hover)',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--search:hover' => 'color: {{VALUE}};'],
         ]);
 
         $this->end_controls_section();
@@ -1605,32 +1603,6 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
 
         <?php
         $is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
-
-        // Output CSS custom properties for sticky bar styles (shared by editor and frontend)
-        $sticky_vars = [];
-        $sticky_map = [
-            'sticky_bar_bg'             => '--lw-sticky-bg',
-            'sticky_bar_border_color'   => '--lw-sticky-border-color',
-            'sticky_bar_shadow'         => '--lw-sticky-shadow',
-            'sticky_bar_padding'        => '--lw-sticky-padding',
-            'sticky_filter_bg'          => '--lw-sticky-filter-bg',
-            'sticky_filter_color'       => '--lw-sticky-filter-color',
-            'sticky_filter_bg_hover'    => '--lw-sticky-filter-bg-hover',
-            'sticky_filter_color_hover' => '--lw-sticky-filter-color-hover',
-            'sticky_search_bg'          => '--lw-sticky-search-bg',
-            'sticky_search_color'       => '--lw-sticky-search-color',
-            'sticky_search_bg_hover'    => '--lw-sticky-search-bg-hover',
-            'sticky_search_color_hover' => '--lw-sticky-search-color-hover',
-        ];
-        foreach ($sticky_map as $key => $var) {
-            $val = $settings[$key] ?? '';
-            if ($val !== '') {
-                $sticky_vars[] = esc_attr($var) . ':' . esc_attr($val);
-            }
-        }
-        if ($sticky_vars) {
-            echo '<style>:root{' . implode(';', $sticky_vars) . '}</style>';
-        }
 
         if ($is_editor) {
             // Render server-side preview with real data so styles are visible in editor
