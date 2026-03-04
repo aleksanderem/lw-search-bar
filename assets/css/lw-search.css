@@ -312,32 +312,39 @@
     align-items: center;
     gap: 8px;
     padding: 8px 14px;
-    border: 1px solid #ddd;
+    border: 1px solid #ddd !important;
     border-radius: 6px;
-    background: #fff;
+    background: #fff !important;
     cursor: pointer;
     font-size: 14px;
-    color: #555;
+    font-weight: inherit;
+    color: #555 !important;
     transition: all 0.15s;
     white-space: nowrap;
+    box-shadow: none !important;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    line-height: 1.4;
 }
 
 .lw-toolbar-btn:hover {
-    background: #FAF7F3;
-    border-color: #C8B89A;
-    color: #4A3F33;
+    background: #FAF7F3 !important;
+    border-color: #C8B89A !important;
+    color: #4A3F33 !important;
+    box-shadow: none !important;
 }
 
 .lw-toolbar-btn--active {
-    background: #F0EBE4;
-    border-color: #C8B89A;
-    color: #4A3F33;
+    background: #F0EBE4 !important;
+    border-color: #C8B89A !important;
+    color: #4A3F33 !important;
 }
 
 .lw-dropdown--open .lw-toolbar-btn {
-    background: #fff;
-    border-color: #B8A080;
-    color: #4A3F33;
+    background: #fff !important;
+    border-color: #B8A080 !important;
+    color: #4A3F33 !important;
 }
 
 .lw-dropdown--open .lw-toolbar-btn svg {
@@ -382,29 +389,36 @@
     display: block;
     width: 100%;
     padding: 9px 14px;
-    border: none;
-    background: none;
+    border: none !important;
+    background: none !important;
     text-align: left;
     font-size: 14px;
-    color: #555;
+    font-weight: inherit;
+    color: #555 !important;
     cursor: pointer;
     border-radius: 5px;
     transition: background 0.1s;
+    box-shadow: none !important;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    line-height: 1.4;
 }
 
 .lw-dropdown__item:hover {
-    background: #E8E0D4;
-    color: #4A3F33;
+    background: #E8E0D4 !important;
+    color: #4A3F33 !important;
+    box-shadow: none !important;
 }
 
 .lw-dropdown__item--active {
-    background: #D8CCBA;
-    color: #3A3228;
+    background: #D8CCBA !important;
+    color: #3A3228 !important;
     font-weight: 600;
 }
 
 .lw-dropdown__item--active:hover {
-    background: #CEBFAA;
+    background: #CEBFAA !important;
 }
 
 /* ── Table view ── */
