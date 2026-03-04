@@ -1464,15 +1464,28 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'selectors' => ['.lw-sticky-bar' => 'background-color: {{VALUE}};'],
         ]);
 
-        $this->add_control('sticky_bar_border_color', [
-            'label'     => 'Kolor obramowania',
-            'type'      => \Elementor\Controls_Manager::COLOR,
-            'selectors' => ['.lw-sticky-bar' => 'border-top-color: {{VALUE}};'],
+        $this->add_group_control(\Elementor\Group_Control_Border::get_type(), [
+            'name'     => 'sticky_bar_border',
+            'selector' => '.lw-sticky-bar',
+        ]);
+
+        $this->add_control('sticky_bar_border_radius', [
+            'label'      => 'Zaokrąglenie',
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px'],
+            'selectors'  => ['.lw-sticky-bar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
 
         $this->add_group_control(\Elementor\Group_Control_Box_Shadow::get_type(), [
             'name'     => 'sticky_bar_shadow',
             'selector' => '.lw-sticky-bar',
+        ]);
+
+        $this->add_responsive_control('sticky_bar_margin', [
+            'label'      => 'Margines',
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', 'em'],
+            'selectors'  => ['.lw-sticky-bar' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
 
         $this->add_responsive_control('sticky_bar_padding', [
@@ -1500,6 +1513,38 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'selectors' => ['.lw-sticky-bar__btn--filter' => 'color: {{VALUE}};'],
         ]);
 
+        $this->add_group_control(\Elementor\Group_Control_Border::get_type(), [
+            'name'     => 'sticky_filter_border',
+            'selector' => '.lw-sticky-bar__btn--filter',
+        ]);
+
+        $this->add_control('sticky_filter_border_radius', [
+            'label'      => 'Zaokrąglenie',
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px'],
+            'selectors'  => ['.lw-sticky-bar__btn--filter' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
+        ]);
+
+        $this->add_responsive_control('sticky_filter_padding', [
+            'label'      => 'Padding',
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', 'em'],
+            'selectors'  => ['.lw-sticky-bar__btn--filter' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
+        ]);
+
+        $this->add_responsive_control('sticky_filter_margin', [
+            'label'      => 'Margines',
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', 'em'],
+            'selectors'  => ['.lw-sticky-bar__btn--filter' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
+        ]);
+
+        $this->add_control('sticky_filter_hover_heading', [
+            'label'     => 'Hover',
+            'type'      => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+        ]);
+
         $this->add_control('sticky_filter_bg_hover', [
             'label'     => 'Kolor tła (hover)',
             'type'      => \Elementor\Controls_Manager::COLOR,
@@ -1510,6 +1555,12 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'label'     => 'Kolor tekstu (hover)',
             'type'      => \Elementor\Controls_Manager::COLOR,
             'selectors' => ['.lw-sticky-bar__btn--filter:hover' => 'color: {{VALUE}};'],
+        ]);
+
+        $this->add_control('sticky_filter_border_color_hover', [
+            'label'     => 'Kolor obramowania (hover)',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--filter:hover' => 'border-color: {{VALUE}};'],
         ]);
 
         $this->add_control('sticky_search_heading', [
@@ -1530,6 +1581,38 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'selectors' => ['.lw-sticky-bar__btn--search' => 'color: {{VALUE}};'],
         ]);
 
+        $this->add_group_control(\Elementor\Group_Control_Border::get_type(), [
+            'name'     => 'sticky_search_border',
+            'selector' => '.lw-sticky-bar__btn--search',
+        ]);
+
+        $this->add_control('sticky_search_border_radius', [
+            'label'      => 'Zaokrąglenie',
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px'],
+            'selectors'  => ['.lw-sticky-bar__btn--search' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
+        ]);
+
+        $this->add_responsive_control('sticky_search_padding', [
+            'label'      => 'Padding',
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', 'em'],
+            'selectors'  => ['.lw-sticky-bar__btn--search' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
+        ]);
+
+        $this->add_responsive_control('sticky_search_margin', [
+            'label'      => 'Margines',
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', 'em'],
+            'selectors'  => ['.lw-sticky-bar__btn--search' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
+        ]);
+
+        $this->add_control('sticky_search_hover_heading', [
+            'label'     => 'Hover',
+            'type'      => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+        ]);
+
         $this->add_control('sticky_search_bg_hover', [
             'label'     => 'Kolor tła (hover)',
             'type'      => \Elementor\Controls_Manager::COLOR,
@@ -1540,6 +1623,12 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'label'     => 'Kolor tekstu (hover)',
             'type'      => \Elementor\Controls_Manager::COLOR,
             'selectors' => ['.lw-sticky-bar__btn--search:hover' => 'color: {{VALUE}};'],
+        ]);
+
+        $this->add_control('sticky_search_border_color_hover', [
+            'label'     => 'Kolor obramowania (hover)',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['.lw-sticky-bar__btn--search:hover' => 'border-color: {{VALUE}};'],
         ]);
 
         $this->end_controls_section();
