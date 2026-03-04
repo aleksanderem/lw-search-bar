@@ -60,6 +60,16 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'default' => 'dostepne',
         ]);
 
+        $this->add_control('hide_before_search', [
+            'label'        => 'Ukryj wyniki przed wyszukiwaniem',
+            'type'         => \Elementor\Controls_Manager::SWITCHER,
+            'label_on'     => 'Tak',
+            'label_off'    => 'Nie',
+            'return_value' => 'yes',
+            'default'      => '',
+            'description'  => 'Wyniki pokażą się dopiero po kliknięciu SZUKAJ.',
+        ]);
+
         $this->end_controls_section();
 
         // ── Style: Toolbar ──
@@ -1448,8 +1458,9 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'sprzedane'     => 'Sprzedane',
         ];
         $status_label = $status_labels[$default_status] ?? 'Dostępne';
+        $hide_before = $settings['hide_before_search'] === 'yes';
         ?>
-        <div class="lw-results-toolbar">
+        <div class="lw-results-toolbar"<?php if ($hide_before) echo ' style="display:none;"'; ?> id="lw-results-toolbar">
             <div class="lw-toolbar-left">
                 <div class="lw-dropdown" id="lw-dropdown-status">
                     <button type="button" class="lw-toolbar-btn<?php echo $default_status ? ' lw-toolbar-btn--active' : ''; ?>" id="lw-btn-status">
@@ -1630,7 +1641,7 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
         } else {
             // Frontend: empty containers populated by JS
             ?>
-            <div class="lw-results" id="lw-results">
+            <div class="lw-results" id="lw-results"<?php if ($settings['hide_before_search'] === 'yes') echo ' style="display:none;"'; ?>>
                 <div class="lw-grid" id="lw-grid"></div>
                 <table class="lw-table" id="lw-table" style="display:none;">
                     <thead>
@@ -1654,6 +1665,9 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             (function(){
                 <?php if ($default_status !== 'dostepne') : ?>
                 window.lwDefaultStatus = <?php echo wp_json_encode($default_status); ?>;
+                <?php endif; ?>
+                <?php if ($hide_before) : ?>
+                window.lwHideBeforeSearch = true;
                 <?php endif; ?>
                 <?php if ($default_view !== 'grid') : ?>
                 window.lwDefaultView = <?php echo wp_json_encode($default_view); ?>;

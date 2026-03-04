@@ -508,7 +508,21 @@
         }
     }
 
-    if (searchBtn) searchBtn.addEventListener('click', doSearch);
+    var hideBeforeSearch = window.lwHideBeforeSearch || false;
+    var resultsRevealed = !hideBeforeSearch;
+
+    function revealResults() {
+        var resultsEl = document.getElementById('lw-results');
+        var toolbarEl = document.getElementById('lw-results-toolbar');
+        if (resultsEl) resultsEl.style.display = '';
+        if (toolbarEl) toolbarEl.style.display = '';
+        resultsRevealed = true;
+    }
+
+    if (searchBtn) searchBtn.addEventListener('click', function () {
+        if (!resultsRevealed) revealResults();
+        doSearch();
+    });
 
     // ── Custom dropdowns ──
     function initDropdown(dropdownId, btnId, onSelect) {
@@ -711,5 +725,5 @@
         window.addEventListener('resize', onResize);
     })();
 
-    doSearch();
+    if (!hideBeforeSearch) doSearch();
 })();
