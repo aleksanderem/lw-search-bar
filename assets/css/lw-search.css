@@ -972,7 +972,22 @@
 
 /* ── Mobile drawer ── */
 .lw-drawer-trigger {
-    display: none;
+    display: none !important;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    font-size: 13px;
+    color: #5A5044;
+    white-space: nowrap;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    line-height: 1.4;
+    box-shadow: none;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
 }
 
 .lw-drawer-trigger__badge {
@@ -1176,14 +1191,8 @@
 @media (max-width: 768px) {
     /* Show drawer trigger, hide form + toolbar-left in main view */
     .lw-drawer-trigger {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
+        display: inline-flex !important;
         width: auto;
-        padding: 0 12px;
-        font-size: 13px;
-        color: #5A5044;
-        white-space: nowrap;
     }
 
     .lw-drawer-trigger__label {

@@ -579,7 +579,7 @@
         // Create drawer trigger button
         var triggerBtn = document.createElement('button');
         triggerBtn.type = 'button';
-        triggerBtn.className = 'lw-view-btn lw-drawer-trigger';
+        triggerBtn.className = 'lw-drawer-trigger';
         triggerBtn.setAttribute('data-tooltip', 'Szukaj i sortuj');
         var triggerIcon = document.createElement('easier-icon');
         triggerIcon.setAttribute('name', 'filter');
