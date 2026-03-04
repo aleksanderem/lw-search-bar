@@ -5,6 +5,70 @@
     margin: 0 auto;
 }
 
+/* ── Defensive resets: prevent theme globals from bleeding in ── */
+.lw-search-bar *,
+.lw-search-bar *::before,
+.lw-search-bar *::after,
+.elementor-widget-lw-search-form *,
+.elementor-widget-lw-search-form *::before,
+.elementor-widget-lw-search-form *::after,
+.elementor-widget-lw-search-results *,
+.elementor-widget-lw-search-results *::before,
+.elementor-widget-lw-search-results *::after {
+    box-sizing: border-box;
+}
+
+/* Buttons reset */
+.lw-search-bar button,
+.elementor-widget-lw-search-form button,
+.elementor-widget-lw-search-results button {
+    font-family: inherit;
+    line-height: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Links reset */
+.lw-search-bar a,
+.elementor-widget-lw-search-results a {
+    text-decoration: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.lw-search-bar a:hover,
+.elementor-widget-lw-search-results a:hover {
+    text-decoration: none;
+}
+
+.lw-search-bar a:focus,
+.elementor-widget-lw-search-results a:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Select reset */
+.lw-search-bar select,
+.elementor-widget-lw-search-form select {
+    font-family: inherit;
+    line-height: inherit;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Input reset */
+.lw-search-bar input[type="range"],
+.elementor-widget-lw-search-form input[type="range"] {
+    box-shadow: none;
+    outline: none;
+}
+
 /* ── Form heading ── */
 .lw-search-heading {
     font-size: 28px;
@@ -68,8 +132,12 @@
     min-width: 0;
     padding: 8px 28px 8px 4px;
     border: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     border-bottom: 2px solid #999;
     background: transparent;
+    background-color: transparent;
     font-size: 16px;
     color: #333;
     appearance: none;
@@ -80,6 +148,10 @@
     cursor: pointer;
     border-radius: 0;
     outline: none;
+    box-shadow: none;
+    line-height: 1.4;
+    height: auto;
+    min-height: 0;
 }
 
 .lw-select:focus {
@@ -201,10 +273,23 @@
     cursor: pointer;
     text-transform: uppercase;
     transition: background 0.2s;
+    line-height: 1.4;
+    text-decoration: none;
+    box-shadow: none;
 }
 
-.lw-btn:hover {
+.lw-btn:hover,
+.lw-btn:focus {
     background: #C8B89A;
+    color: #4A3F33;
+    text-decoration: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.lw-btn:active {
+    background: #BFA888;
+    color: #4A3F33;
 }
 
 .lw-view-toggle {
@@ -225,18 +310,24 @@
     color: #B8A080;
     transition: all 0.15s;
     padding: 0;
+    box-shadow: none;
+    text-decoration: none;
+    line-height: 1;
 }
 
 .lw-view-btn:hover {
     background: #FAF7F3;
     color: #4A3F33;
+    box-shadow: none;
+    text-decoration: none;
 }
 
 .lw-view-btn:focus,
 .lw-view-btn:active:focus {
     outline: none;
     outline-offset: 1px;
-    background: initial;
+    background: #fff;
+    box-shadow: none;
 }
 
 /* View button tooltip */
@@ -320,12 +411,19 @@
     color: #555;
     transition: all 0.15s;
     white-space: nowrap;
+    box-shadow: none;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    line-height: 1.4;
 }
 
 .lw-toolbar-btn:hover {
     background: #FAF7F3;
     border-color: #C8B89A;
     color: #4A3F33;
+    box-shadow: none;
+    text-decoration: none;
 }
 
 .lw-toolbar-btn--active {
@@ -390,11 +488,18 @@
     cursor: pointer;
     border-radius: 5px;
     transition: background 0.1s;
+    box-shadow: none;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    line-height: 1.4;
 }
 
 .lw-dropdown__item:hover {
     background: #E8E0D4;
     color: #4A3F33;
+    box-shadow: none;
+    text-decoration: none;
 }
 
 .lw-dropdown__item--active {
@@ -721,6 +826,11 @@
     white-space: nowrap;
     cursor: pointer;
     border: none;
+    box-shadow: none;
+    outline: none;
+    line-height: 1.4;
+    letter-spacing: normal;
+    text-transform: none;
 }
 
 .lw-card__btn--viz,
@@ -734,6 +844,13 @@
     background: #C8B89A;
     text-decoration: none;
     color: #333;
+    box-shadow: none;
+}
+
+.lw-card__btn--viz:focus,
+.lw-card__btn--view:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .lw-card__btn--inquiry {
@@ -748,6 +865,12 @@
     background: #FFF5F5;
     text-decoration: none;
     color: #B71C1C;
+    box-shadow: none;
+}
+
+.lw-card__btn--inquiry:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 /* Status badge on card */
@@ -788,6 +911,12 @@
     background: #C8B89A;
     text-decoration: none;
     color: #333;
+    box-shadow: none;
+}
+
+.lw-card__btn--rzuty:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 /* Thumbnail placeholder */
@@ -812,10 +941,24 @@
     margin-left: 4px;
     vertical-align: baseline;
     line-height: 1;
+    box-shadow: none;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    color: inherit;
 }
 
 .lw-hist-trigger:hover {
     opacity: 0.7;
+    box-shadow: none;
+    text-decoration: none;
+    background: none;
+    color: inherit;
+}
+
+.lw-hist-trigger:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 /* ── Price history modal ── */
@@ -883,10 +1026,23 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    box-shadow: none;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    line-height: 1.4;
 }
 
 .lw-modal__close:hover {
     background: #b8a999;
+    color: #333;
+    box-shadow: none;
+    text-decoration: none;
+}
+
+.lw-modal__close:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 /* Table action buttons */
@@ -917,6 +1073,12 @@
     border-color: #c8b89a;
     color: #4a3f33;
     text-decoration: none;
+    box-shadow: none;
+}
+
+.lw-table-action:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .lw-table-action--inquiry {
@@ -929,6 +1091,8 @@
     background: #b8a888;
     border-color: #a89878;
     color: #fff;
+    box-shadow: none;
+    text-decoration: none;
 }
 
 /* Tooltip */
@@ -1052,11 +1216,22 @@
     line-height: 1;
     border-radius: 6px;
     transition: background 0.15s, color 0.15s;
+    box-shadow: none;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
 }
 
 .lw-drawer__close:hover {
     background: #f0ebe4;
     color: #333;
+    box-shadow: none;
+    text-decoration: none;
+}
+
+.lw-drawer__close:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .lw-drawer__body {
