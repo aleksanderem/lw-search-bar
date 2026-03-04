@@ -1492,8 +1492,8 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'type'       => \Elementor\Controls_Manager::DIMENSIONS,
             'size_units' => ['px', 'em'],
             'selectors'  => [
-                '{{WRAPPER}} .lw-sticky-bar' => 'top: {{TOP}}{{UNIT}}; right: {{RIGHT}}{{UNIT}}; bottom: {{BOTTOM}}{{UNIT}}; left: {{LEFT}}{{UNIT}};',
-                '.lw-sticky-bar' => 'top: {{TOP}}{{UNIT}}; right: {{RIGHT}}{{UNIT}}; bottom: {{BOTTOM}}{{UNIT}}; left: {{LEFT}}{{UNIT}};',
+                '{{WRAPPER}} .lw-sticky-bar' => 'top: {{TOP}}{{UNIT}} !important; right: {{RIGHT}}{{UNIT}} !important; bottom: {{BOTTOM}}{{UNIT}} !important; left: {{LEFT}}{{UNIT}} !important;',
+                '.lw-sticky-bar' => 'top: {{TOP}}{{UNIT}} !important; right: {{RIGHT}}{{UNIT}} !important; bottom: {{BOTTOM}}{{UNIT}} !important; left: {{LEFT}}{{UNIT}} !important;',
             ],
         ]);
 
