@@ -2,7 +2,7 @@
 /**
  * Plugin Name: LW Search Bar
  * Description: Wyszukiwarka mieszkań dla Rezydencji Liwskiej — łączy dane z dwóch inwestycji (RL2/RL3) przez REST API.
- * Version: 1.3.2
+ * Version: 1.3.3
  * Author: Alex M.
  * Update URI: https://github.com/aleksanderem/lw-search-bar
  * Requires PHP: 7.4
@@ -10,7 +10,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-define('LW_SEARCH_VERSION', '1.3.2');
+define('LW_SEARCH_VERSION', '1.3.3');
 define('LW_SEARCH_DIR', plugin_dir_path(__FILE__));
 define('LW_SEARCH_URL', plugin_dir_url(__FILE__));
 define('LW_SEARCH_GITHUB_REPO', 'aleksanderem/lw-search-bar');
@@ -18,9 +18,9 @@ define('LW_SEARCH_GITHUB_REPO', 'aleksanderem/lw-search-bar');
 require_once LW_SEARCH_DIR . 'includes/class-lw-shortcode.php';
 require_once LW_SEARCH_DIR . 'includes/class-lw-github-updater.php';
 
-// Register frontend assets early so Elementor can enqueue them via get_style_depends/get_script_depends
+// Enqueue CSS early so it lands in <head> (Elementor 3.4.x get_style_depends is unreliable)
 add_action('wp_enqueue_scripts', function () {
-    wp_register_style('lw-search-css', LW_SEARCH_URL . 'assets/css/lw-search.css', [], LW_SEARCH_VERSION);
+    wp_enqueue_style('lw-search-css', LW_SEARCH_URL . 'assets/css/lw-search.css', [], LW_SEARCH_VERSION);
     wp_register_script('lw-search-js', LW_SEARCH_URL . 'assets/js/lw-search.js', [], LW_SEARCH_VERSION, true);
     wp_register_script('easiericons-sdk', 'https://ezicons.com/sdk.js', [], null, false);
 }, 5);
