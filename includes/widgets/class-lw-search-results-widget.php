@@ -1873,7 +1873,7 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
 
             // Sticky bar preview in editor
             if (($settings['enable_sticky_bar'] ?? 'yes') === 'yes') : ?>
-                <div class="lw-sticky-bar" style="position:relative; margin-top:24px;">
+                <div class="lw-sticky-bar" style="position:sticky; bottom:0; margin-top:24px;">
                     <div class="lw-sticky-bar__inner">
                         <div class="lw-sticky-bar__left">
                             <div class="lw-dropdown">
