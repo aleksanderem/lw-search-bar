@@ -700,8 +700,6 @@
             e.stopPropagation();
             openDrawer();
         });
-        closeBtn.addEventListener('click', closeDrawer);
-        overlay.addEventListener('click', closeDrawer);
 
         // Close drawer when search button is clicked
         if (searchBtn) {
@@ -712,17 +710,67 @@
             });
         }
 
-        // Handle resize: move elements back when going to desktop
+        // Handle resize: move elements back when going to desktop (only if drawer closed)
         var wasDesktop = window.innerWidth > MOBILE_BP;
         function onResize() {
             var isDesktop = window.innerWidth > MOBILE_BP;
-            if (isDesktop && !wasDesktop) {
-                closeDrawer();
+            if (isDesktop && !wasDesktop && !drawer.classList.contains('lw-drawer--open')) {
                 moveBack();
             }
             wasDesktop = isDesktop;
         }
         window.addEventListener('resize', onResize);
+
+        // Always move elements back when drawer closes
+        var origClose = closeDrawer;
+        closeDrawer = function () {
+            origClose();
+            if (window.innerWidth > MOBILE_BP) {
+                moveBack();
+            }
+        };
+        closeBtn.addEventListener('click', closeDrawer);
+        overlay.addEventListener('click', closeDrawer);
+
+        // ── Sticky bottom bar ──
+        var stickyBar = document.createElement('div');
+        stickyBar.className = 'lw-sticky-bar';
+        stickyBar.style.display = 'none';
+
+        var stickyFilterBtn = document.createElement('button');
+        stickyFilterBtn.type = 'button';
+        stickyFilterBtn.className = 'lw-sticky-bar__btn lw-sticky-bar__btn--filter';
+        stickyFilterBtn.innerHTML = '<easier-icon name="filter" variant="stroke" size="18"></easier-icon> Filtry';
+        stickyBar.appendChild(stickyFilterBtn);
+
+        var stickySearchBtn = document.createElement('button');
+        stickySearchBtn.type = 'button';
+        stickySearchBtn.className = 'lw-sticky-bar__btn lw-sticky-bar__btn--search';
+        stickySearchBtn.textContent = searchBtn ? (searchBtn.textContent || 'SZUKAJ') : 'SZUKAJ';
+        stickyBar.appendChild(stickySearchBtn);
+
+        document.body.appendChild(stickyBar);
+
+        stickyFilterBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            openDrawer();
+        });
+
+        stickySearchBtn.addEventListener('click', function () {
+            if (!resultsRevealed) revealResults();
+            doSearch();
+            var resultsEl = document.getElementById('lw-results');
+            if (resultsEl) resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Show/hide sticky bar based on form visibility
+        if (searchForm && 'IntersectionObserver' in window) {
+            var stickyObserver = new IntersectionObserver(function (entries) {
+                var formVisible = entries[0].isIntersecting;
+                stickyBar.style.display = formVisible ? 'none' : '';
+            }, { threshold: 0 });
+            stickyObserver.observe(searchForm);
+        }
     })();
 
     if (!hideBeforeSearch) doSearch();

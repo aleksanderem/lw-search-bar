@@ -1152,6 +1152,58 @@
     margin-bottom: 4px;
 }
 
+/* ── Sticky bottom bar ── */
+.lw-sticky-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9990;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 20px;
+    background: #fff;
+    border-top: 1px solid #E1D1B8;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.lw-sticky-bar__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: none;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.lw-sticky-bar__btn--filter {
+    background: #F0EBE4;
+    color: #4A3F33;
+}
+
+.lw-sticky-bar__btn--filter:hover {
+    background: #E1D1B8;
+}
+
+.lw-sticky-bar__btn--search {
+    background: #D4C4AA;
+    color: #4A3F33;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.lw-sticky-bar__btn--search:hover {
+    background: #C8B89A;
+}
+
 /* ── Responsive ── */
 
 /* Tablet landscape */
