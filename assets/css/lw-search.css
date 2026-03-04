@@ -5,6 +5,14 @@
     margin: 0 auto;
 }
 
+/* ── Form heading ── */
+.lw-search-heading {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 16px 0;
+}
+
 /* ── Form ── */
 .lw-search-form {
     padding: 20px 0 32px;
@@ -130,6 +138,7 @@
     transform: translateY(-50%);
     border-radius: 2px;
     pointer-events: none;
+    z-index: 2;
 }
 
 .lw-range {

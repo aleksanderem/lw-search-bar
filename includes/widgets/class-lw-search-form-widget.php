@@ -38,10 +38,67 @@ class LW_Search_Form_Widget extends \Elementor\Widget_Base {
             'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
         ]);
 
+        $this->add_control('heading_text', [
+            'label'   => 'Tytuł formularza',
+            'type'    => \Elementor\Controls_Manager::TEXT,
+            'default' => 'Wyszukaj mieszkanie',
+        ]);
+
+        $this->add_control('heading_tag', [
+            'label'   => 'Tag HTML',
+            'type'    => \Elementor\Controls_Manager::SELECT,
+            'options' => [
+                'h1' => 'H1',
+                'h2' => 'H2',
+                'h3' => 'H3',
+                'h4' => 'H4',
+                'h5' => 'H5',
+                'p'  => 'P',
+            ],
+            'default' => 'h2',
+        ]);
+
         $this->add_control('button_text', [
             'label'   => 'Tekst przycisku',
             'type'    => \Elementor\Controls_Manager::TEXT,
             'default' => 'SZUKAJ',
+        ]);
+
+        $this->end_controls_section();
+
+        // ── Style: Tytuł ──
+        $this->start_controls_section('section_style_heading', [
+            'label' => 'Tytuł',
+            'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+        ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Typography::get_type(), [
+            'name'     => 'heading_typography',
+            'selector' => '{{WRAPPER}} .lw-search-heading',
+        ]);
+
+        $this->add_control('heading_color', [
+            'label'     => 'Kolor',
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => ['{{WRAPPER}} .lw-search-heading' => 'color: {{VALUE}};'],
+        ]);
+
+        $this->add_control('heading_align', [
+            'label'   => 'Wyrównanie',
+            'type'    => \Elementor\Controls_Manager::CHOOSE,
+            'options' => [
+                'left'   => ['title' => 'Lewo',  'icon' => 'eicon-text-align-left'],
+                'center' => ['title' => 'Środek', 'icon' => 'eicon-text-align-center'],
+                'right'  => ['title' => 'Prawo',  'icon' => 'eicon-text-align-right'],
+            ],
+            'selectors' => ['{{WRAPPER}} .lw-search-heading' => 'text-align: {{VALUE}};'],
+        ]);
+
+        $this->add_responsive_control('heading_margin', [
+            'label'      => 'Margines',
+            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px'],
+            'selectors'  => ['{{WRAPPER}} .lw-search-heading' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
 
         $this->end_controls_section();
@@ -266,10 +323,17 @@ class LW_Search_Form_Widget extends \Elementor\Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
         $button_text = esc_html($settings['button_text']);
+        $heading_text = $settings['heading_text'] ?? '';
+        $heading_tag = $settings['heading_tag'] ?? 'h2';
+        $allowed_tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'p'];
+        if (!in_array($heading_tag, $allowed_tags, true)) $heading_tag = 'h2';
 
         // Enqueue shared assets and localize data
         LW_Shortcode::enqueue_shared_assets();
         ?>
+        <?php if (!empty($heading_text)) : ?>
+            <<?php echo $heading_tag; ?> class="lw-search-heading"><?php echo esc_html($heading_text); ?></<?php echo $heading_tag; ?>>
+        <?php endif; ?>
         <div class="lw-search-form">
             <!-- Row 1: Inwestycja + Powierzchnia -->
             <div class="lw-search-row">
