@@ -737,19 +737,61 @@
         stickyBar.className = 'lw-sticky-bar';
         stickyBar.style.display = 'none';
 
+        var stickyLeft = document.createElement('div');
+        stickyLeft.className = 'lw-sticky-bar__left';
+        stickyBar.appendChild(stickyLeft);
+
+        var stickyRight = document.createElement('div');
+        stickyRight.className = 'lw-sticky-bar__right';
+        stickyBar.appendChild(stickyRight);
+
         var stickyFilterBtn = document.createElement('button');
         stickyFilterBtn.type = 'button';
         stickyFilterBtn.className = 'lw-sticky-bar__btn lw-sticky-bar__btn--filter';
         stickyFilterBtn.innerHTML = '<easier-icon name="filter" variant="stroke" size="18"></easier-icon> Filtry';
-        stickyBar.appendChild(stickyFilterBtn);
+        stickyRight.appendChild(stickyFilterBtn);
 
         var stickySearchBtn = document.createElement('button');
         stickySearchBtn.type = 'button';
         stickySearchBtn.className = 'lw-sticky-bar__btn lw-sticky-bar__btn--search';
         stickySearchBtn.textContent = searchBtn ? (searchBtn.textContent || 'SZUKAJ') : 'SZUKAJ';
-        stickyBar.appendChild(stickySearchBtn);
+        stickyRight.appendChild(stickySearchBtn);
 
         document.body.appendChild(stickyBar);
+
+        // Sort dropdown and view toggle references from toolbar
+        var sortDropdown = document.getElementById('lw-dropdown-sort');
+        var viewToggleEl = toolbar.querySelector('.lw-view-toggle');
+
+        // Placeholders for sort/view when moved to sticky bar
+        var sortPlaceholder = document.createElement('div');
+        sortPlaceholder.style.display = 'none';
+        var viewPlaceholder = document.createElement('div');
+        viewPlaceholder.style.display = 'none';
+
+        var stickyVisible = false;
+
+        function moveToStickyBar() {
+            if (sortDropdown && sortDropdown.parentNode) {
+                sortDropdown.parentNode.insertBefore(sortPlaceholder, sortDropdown);
+                stickyLeft.appendChild(sortDropdown);
+            }
+            if (viewToggleEl && viewToggleEl.parentNode) {
+                viewToggleEl.parentNode.insertBefore(viewPlaceholder, viewToggleEl);
+                stickyLeft.appendChild(viewToggleEl);
+            }
+        }
+
+        function moveFromStickyBar() {
+            if (sortDropdown && sortPlaceholder.parentNode) {
+                sortPlaceholder.parentNode.insertBefore(sortDropdown, sortPlaceholder);
+                sortPlaceholder.parentNode.removeChild(sortPlaceholder);
+            }
+            if (viewToggleEl && viewPlaceholder.parentNode) {
+                viewPlaceholder.parentNode.insertBefore(viewToggleEl, viewPlaceholder);
+                viewPlaceholder.parentNode.removeChild(viewPlaceholder);
+            }
+        }
 
         stickyFilterBtn.addEventListener('click', function (e) {
             e.stopPropagation();
@@ -767,7 +809,15 @@
         if (searchForm && 'IntersectionObserver' in window) {
             var stickyObserver = new IntersectionObserver(function (entries) {
                 var formVisible = entries[0].isIntersecting;
-                stickyBar.style.display = formVisible ? 'none' : '';
+                if (!formVisible && !stickyVisible) {
+                    stickyVisible = true;
+                    moveToStickyBar();
+                    stickyBar.style.display = '';
+                } else if (formVisible && stickyVisible) {
+                    stickyVisible = false;
+                    stickyBar.style.display = 'none';
+                    moveFromStickyBar();
+                }
             }, { threshold: 0 });
             stickyObserver.observe(searchForm);
         }
