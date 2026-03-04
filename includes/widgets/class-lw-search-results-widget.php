@@ -1481,11 +1481,11 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'selector' => '.lw-sticky-bar',
         ]);
 
-        $this->add_responsive_control('sticky_bar_margin', [
-            'label'      => 'Margines',
+        $this->add_responsive_control('sticky_bar_position', [
+            'label'      => 'Pozycja (top, right, bottom, left)',
             'type'       => \Elementor\Controls_Manager::DIMENSIONS,
             'size_units' => ['px', 'em'],
-            'selectors'  => ['.lw-sticky-bar' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
+            'selectors'  => ['.lw-sticky-bar' => 'top: {{TOP}}{{UNIT}}; right: {{RIGHT}}{{UNIT}}; bottom: {{BOTTOM}}{{UNIT}}; left: {{LEFT}}{{UNIT}};'],
         ]);
 
         $this->add_responsive_control('sticky_bar_padding', [
