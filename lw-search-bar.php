@@ -2,7 +2,7 @@
 /**
  * Plugin Name: LW Search Bar
  * Description: Wyszukiwarka mieszkań dla Rezydencji Liwskiej — łączy dane z dwóch inwestycji (RL2/RL3) przez REST API.
- * Version: 1.4.1
+ * Version: 1.4.0
  * Author: Alex M.
  * Update URI: https://github.com/aleksanderem/lw-search-bar
  * Requires PHP: 7.4
@@ -10,7 +10,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-define('LW_SEARCH_VERSION', '1.4.1');
+define('LW_SEARCH_VERSION', '1.4.0');
 define('LW_SEARCH_DIR', plugin_dir_path(__FILE__));
 define('LW_SEARCH_URL', plugin_dir_url(__FILE__));
 define('LW_SEARCH_GITHUB_REPO', 'aleksanderem/lw-search-bar');
