@@ -1155,7 +1155,7 @@
 /* ── Sticky bottom bar ── */
 .lw-sticky-bar {
     position: fixed;
-    top: auto;
+    top: auto !important;
     bottom: 0;
     left: 0;
     right: 0;
