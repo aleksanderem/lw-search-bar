@@ -1458,6 +1458,21 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'condition' => ['enable_sticky_bar' => 'yes'],
         ]);
 
+        $this->add_responsive_control('sticky_bar_width', [
+            'label'      => 'Szerokość paska',
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => ['px', '%', 'vw'],
+            'range'      => [
+                'px' => ['min' => 300, 'max' => 1920],
+                '%'  => ['min' => 30, 'max' => 100],
+                'vw' => ['min' => 30, 'max' => 100],
+            ],
+            'selectors'  => [
+                '{{WRAPPER}} .lw-sticky-bar' => 'width: {{SIZE}}{{UNIT}}; left: 50% !important; right: auto !important; transform: translateX(-50%);',
+                '.lw-sticky-bar' => 'width: {{SIZE}}{{UNIT}}; left: 50% !important; right: auto !important; transform: translateX(-50%);',
+            ],
+        ]);
+
         $this->add_control('sticky_bar_bg', [
             'label'     => 'Kolor tła',
             'type'      => \Elementor\Controls_Manager::COLOR,
@@ -1487,13 +1502,14 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
             'selector' => '{{WRAPPER}} .lw-sticky-bar, .lw-sticky-bar',
         ]);
 
-        $this->add_responsive_control('sticky_bar_position', [
-            'label'      => 'Pozycja (top, right, bottom, left)',
-            'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-            'size_units' => ['px', 'em'],
+        $this->add_responsive_control('sticky_bar_bottom', [
+            'label'      => 'Odstęp od dołu',
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => ['px'],
+            'range'      => ['px' => ['min' => 0, 'max' => 100]],
             'selectors'  => [
-                '{{WRAPPER}} .lw-sticky-bar' => 'top: {{TOP}}{{UNIT}} !important; right: {{RIGHT}}{{UNIT}} !important; bottom: {{BOTTOM}}{{UNIT}} !important; left: {{LEFT}}{{UNIT}} !important;',
-                '.lw-sticky-bar' => 'top: {{TOP}}{{UNIT}} !important; right: {{RIGHT}}{{UNIT}} !important; bottom: {{BOTTOM}}{{UNIT}} !important; left: {{LEFT}}{{UNIT}} !important;',
+                '{{WRAPPER}} .lw-sticky-bar' => 'bottom: {{SIZE}}{{UNIT}} !important;',
+                '.lw-sticky-bar' => 'bottom: {{SIZE}}{{UNIT}} !important;',
             ],
         ]);
 
