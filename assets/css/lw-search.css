@@ -1226,6 +1226,52 @@
     background: #C8B89A;
 }
 
+/* ── Sticky bar: toolbar elements override ── */
+.lw-sticky-bar .lw-toolbar-btn {
+    border-color: #E1D1B8 !important;
+    background: transparent !important;
+    color: #4A3F33 !important;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 50px;
+}
+
+.lw-sticky-bar .lw-toolbar-btn:hover {
+    background: #F0EBE4 !important;
+    border-color: #C8B89A !important;
+}
+
+.lw-sticky-bar .lw-toolbar-btn--active {
+    background: #F0EBE4 !important;
+    border-color: #C8B89A !important;
+}
+
+.lw-sticky-bar .lw-dropdown--open .lw-toolbar-btn {
+    background: #F0EBE4 !important;
+    border-color: #B8A080 !important;
+}
+
+.lw-sticky-bar .lw-view-toggle {
+    gap: 2px;
+}
+
+.lw-sticky-bar .lw-view-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #E1D1B8;
+    background: transparent;
+}
+
+.lw-sticky-bar .lw-view-btn:hover {
+    background: #F0EBE4;
+}
+
+.lw-sticky-bar .lw-view-btn--active {
+    background: #F0EBE4;
+    border-color: #C8B89A;
+}
+
 /* ── Responsive ── */
 
 /* Tablet landscape */
