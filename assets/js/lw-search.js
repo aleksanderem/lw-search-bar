@@ -701,6 +701,66 @@
             openDrawer();
         });
 
+        // ── Mobile bar (shown where search form is hidden) ──
+        var mobileBar = document.createElement('div');
+        mobileBar.className = 'lw-mobile-bar';
+
+        var mobileTrigger = document.createElement('button');
+        mobileTrigger.type = 'button';
+        mobileTrigger.className = 'lw-mobile-bar__trigger';
+        mobileTrigger.innerHTML = '<easier-icon name="filter" variant="stroke" size="20"></easier-icon> <span>Szukaj i sortuj</span>';
+        mobileTrigger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            openDrawer();
+        });
+        mobileBar.appendChild(mobileTrigger);
+
+        var mobileViewToggle = document.createElement('div');
+        mobileViewToggle.className = 'lw-view-toggle lw-mobile-bar__views';
+        var viewBtnData = [
+            { view: 'grid', icon: 'grid-view', tooltip: 'Widok siatki' },
+            { view: 'table', icon: 'menu-01', tooltip: 'Widok tabeli' }
+        ];
+        viewBtnData.forEach(function (d) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'lw-view-btn' + (viewToggle && viewToggle.querySelector('.lw-view-btn--active[data-view="' + d.view + '"]') ? ' lw-view-btn--active' : '');
+            btn.setAttribute('data-view', d.view);
+            btn.setAttribute('data-tooltip', d.tooltip);
+            btn.innerHTML = '<easier-icon name="' + d.icon + '" variant="stroke" size="20"></easier-icon>';
+            btn.addEventListener('click', function () {
+                // Sync with original view buttons
+                var origBtn = viewToggle ? viewToggle.querySelector('.lw-view-btn[data-view="' + d.view + '"]') : null;
+                if (origBtn) origBtn.click();
+                // Update mobile bar active states
+                var siblings = mobileViewToggle.querySelectorAll('.lw-view-btn');
+                for (var s = 0; s < siblings.length; s++) siblings[s].classList.remove('lw-view-btn--active');
+                btn.classList.add('lw-view-btn--active');
+            });
+            mobileViewToggle.appendChild(btn);
+        });
+        mobileBar.appendChild(mobileViewToggle);
+
+        // Sync mobile bar when original view buttons are clicked
+        if (viewToggle) {
+            var origViewBtns = viewToggle.querySelectorAll('.lw-view-btn');
+            for (var v = 0; v < origViewBtns.length; v++) {
+                (function (origBtn) {
+                    origBtn.addEventListener('click', function () {
+                        var mBtns = mobileViewToggle.querySelectorAll('.lw-view-btn');
+                        for (var m = 0; m < mBtns.length; m++) {
+                            mBtns[m].classList.toggle('lw-view-btn--active', mBtns[m].getAttribute('data-view') === origBtn.getAttribute('data-view'));
+                        }
+                    });
+                })(origViewBtns[v]);
+            }
+        }
+
+        // Insert after search form
+        if (searchForm && searchForm.parentNode) {
+            searchForm.parentNode.insertBefore(mobileBar, searchForm.nextSibling);
+        }
+
         // Close drawer when search button is clicked
         if (searchBtn) {
             searchBtn.addEventListener('click', function () {

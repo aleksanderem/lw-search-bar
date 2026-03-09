@@ -286,6 +286,11 @@
     border-color: #C8B89A;
 }
 
+/* ── Mobile bar (replaces search form on mobile) ── */
+.lw-mobile-bar {
+    display: none;
+}
+
 /* ── Results toolbar (status filter + view toggle) ── */
 .lw-results-toolbar {
     display: flex;
@@ -1324,21 +1329,37 @@
 
 /* Tablet portrait */
 @media (max-width: 768px) {
-    /* Sticky bar: hide left section (status/sort/view available via drawer) */
+    /* Sticky bar mobile: show view toggle + Filtry, hide dropdowns + SZUKAJ */
     .lw-sticky-bar__left {
+        flex: 0 0 auto;
+    }
+
+    .lw-sticky-bar__left .lw-dropdown {
+        display: none;
+    }
+
+    .lw-sticky-bar__btn--search {
         display: none;
     }
 
     .lw-sticky-bar__right {
         flex: 1;
-        justify-content: stretch;
+        justify-content: flex-end;
     }
 
     .lw-sticky-bar__btn {
-        flex: 1;
-        justify-content: center;
-        padding: 10px 16px;
-        font-size: 13px;
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    /* Bigger view toggle in sticky bar on mobile */
+    .lw-sticky-bar .lw-view-btn {
+        width: 42px;
+        height: 42px;
+    }
+
+    .lw-sticky-bar .lw-view-toggle {
+        gap: 6px;
     }
 
     .lw-sticky-bar__inner {
@@ -1363,21 +1384,67 @@
         transform: translateY(0);
     }
 
-    /* Show drawer trigger, hide form + toolbar-left in main view */
+    /* Hide original drawer trigger in toolbar (replaced by mobile bar) */
     .lw-drawer-trigger {
-        display: inline-flex !important;
-        width: auto;
-    }
-
-    .lw-drawer-trigger__label {
-        font-size: 13px;
+        display: none !important;
     }
 
     .lw-search-form {
         display: none;
     }
 
-    .lw-toolbar-left {
+    /* Mobile bar: visible when form is hidden */
+    .lw-mobile-bar {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 0;
+        gap: 12px;
+    }
+
+    .lw-mobile-bar__trigger {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border: 1px solid #E1D1B8;
+        border-radius: 50px;
+        background: #FAF7F3;
+        color: #4A3F33;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s;
+        flex: 1;
+        justify-content: center;
+    }
+
+    .lw-mobile-bar__trigger:hover {
+        background: #F0EBE4;
+        border-color: #C8B89A;
+    }
+
+    .lw-mobile-bar__views {
+        display: flex !important;
+        gap: 6px;
+    }
+
+    .lw-mobile-bar__views .lw-view-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid #E1D1B8;
+        background: #fff;
+    }
+
+    .lw-mobile-bar__views .lw-view-btn--active {
+        background: #E1D1B8;
+        color: #4A3F33;
+        border-color: #C8B89A;
+    }
+
+    /* Hide toolbar on mobile (replaced by mobile bar above) */
+    .lw-results-toolbar {
         display: none;
     }
 
