@@ -1893,7 +1893,7 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
                                 <td><?php echo esc_html($a['investment'] ?? ''); ?></td>
                                 <td class="lw-table__actions">
                                     <?php if (!empty($a['gallery_3d'])) : ?>
-                                    <a class="lw-table-action" href="<?php echo esc_url($a['gallery_3d'][0]); ?>" target="_blank" rel="noopener" data-tooltip="Wizualizacja 3D"><easier-icon name="3d-scale" size="16"></easier-icon></a>
+                                    <a class="lw-table-action" href="<?php echo esc_url($a['gallery_3d'][0]); ?>" target="_blank" rel="noopener" data-tooltip="Karta katalogowa"><easier-icon name="3d-scale" size="16"></easier-icon></a>
                                     <?php endif; ?>
                                     <a class="lw-table-action" href="<?php echo esc_url($a['link'] ?? '#'); ?>" target="_blank" rel="noopener" data-tooltip="Obejrzyj mieszkanie"><easier-icon name="eye" size="16"></easier-icon></a>
                                     <?php if (!empty($a['pdf_url'])) : ?>
@@ -1930,7 +1930,7 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
                                     <img class="lw-card__thumb-rzut" src="<?php echo esc_url($a['thumbnail']); ?>" alt="Rzut - <?php echo esc_attr($a['title'] ?? ''); ?>">
                                 <?php endif; ?>
                                 <?php if (!empty($a['gallery_3d'])) : ?>
-                                    <img class="lw-card__thumb-viz" src="<?php echo esc_url($a['gallery_3d'][0]); ?>" alt="Wizualizacja - <?php echo esc_attr($a['title'] ?? ''); ?>">
+                                    <img class="lw-card__thumb-viz" src="<?php echo esc_url($a['gallery_3d'][0]); ?>" alt="Karta katalogowa - <?php echo esc_attr($a['title'] ?? ''); ?>">
                                 <?php endif; ?>
                                 <?php if (empty($a['thumbnail']) && empty($a['gallery_3d'])) : ?>
                                     <div class="lw-card__thumb-placeholder">🏠</div>

@@ -259,7 +259,7 @@
             }
 
             if (a.gallery_3d && a.gallery_3d.length > 0) {
-                tdActions.appendChild(makeTableAction(a.gallery_3d[0], 'Wizualizacja 3D', '3d-scale'));
+                tdActions.appendChild(makeTableAction(a.gallery_3d[0], 'Karta katalogowa', '3d-scale'));
             }
 
             tdActions.appendChild(makeTableAction(a.link, 'Obejrzyj mieszkanie', 'eye'));
@@ -360,13 +360,13 @@
             // ── Right: actions ──
             var actions = createEl('div', 'lw-card__actions');
 
-            // wizualizacja 3D (gallery)
+            // karta katalogowa (gallery)
             if (a.gallery_3d && a.gallery_3d.length > 0) {
                 var viz = createEl('a', 'lw-card__btn lw-card__btn--viz');
                 viz.href = a.gallery_3d[0];
                 viz.target = '_blank';
                 viz.rel = 'noopener';
-                viz.textContent = 'wizualizacja 3D  \u203A';
+                viz.textContent = 'karta katalogowa  \u203A';
                 actions.appendChild(viz);
             }
 
