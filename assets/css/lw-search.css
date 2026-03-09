@@ -1277,6 +1277,27 @@
 
 /* Tablet portrait */
 @media (max-width: 768px) {
+    /* Sticky bar: hide left section (status/sort/view available via drawer) */
+    .lw-sticky-bar__left {
+        display: none;
+    }
+
+    .lw-sticky-bar__right {
+        flex: 1;
+        justify-content: stretch;
+    }
+
+    .lw-sticky-bar__btn {
+        flex: 1;
+        justify-content: center;
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .lw-sticky-bar__inner {
+        padding: 8px 16px;
+    }
+
     /* Drawer: switch to bottom sheet on mobile */
     .lw-drawer {
         top: auto;
