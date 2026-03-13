@@ -4,7 +4,7 @@ Tags: apartments, search, real estate
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 
 Wyszukiwarka mieszkań dla Rezydencji Liwskiej — łączy dane z dwóch inwestycji przez REST API.
 
@@ -22,6 +22,10 @@ Dane pobierane są z lokalnego CPT `lokal` oraz z drugiej instalacji WordPress p
 4. Dodaj shortcode `[lw_search_bar]` na wybranej stronie
 
 == Changelog ==
+
+= 1.6.1 =
+* Fix: EZIcons SDK — wstawianie tagu bezpośrednio przez wp_head z data-key (filtr script_loader_tag nie działał z Elementorem)
+* Aktualizacja klucza API EZIcons
 
 = 1.6.0 =
 * Tryb archiwum: presety inwestycji, piętra i statusu dla stron taksonomii

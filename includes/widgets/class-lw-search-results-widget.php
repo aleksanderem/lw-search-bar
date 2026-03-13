@@ -28,7 +28,7 @@ class LW_Search_Results_Widget extends \Elementor\Widget_Base {
     }
 
     public function get_script_depends() {
-        return ['easiericons-sdk', 'lw-search-js'];
+        return ['lw-search-js'];
     }
 
     protected function _register_controls() {

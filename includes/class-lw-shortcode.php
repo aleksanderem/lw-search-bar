@@ -22,17 +22,13 @@ class LW_Shortcode {
      * Used by both the shortcode and Elementor widgets.
      */
     public static function enqueue_shared_assets() {
-        // EasierIcons SDK for view toggle icons
-        wp_enqueue_script(
-            'easiericons-sdk',
-            'https://ezicons.com/sdk.js',
-            [],
-            null,
-            false
-        );
-        // Only add the filter once
-        if (!has_filter('script_loader_tag', [__CLASS__, 'add_easiericons_data_key'])) {
-            add_filter('script_loader_tag', [__CLASS__, 'add_easiericons_data_key'], 10, 2);
+        // EasierIcons SDK — output directly with data-key (wp_enqueue can't add custom attributes reliably)
+        static $sdk_queued = false;
+        if (!$sdk_queued) {
+            $sdk_queued = true;
+            add_action('wp_head', function () {
+                echo '<script src="https://ezicons.com/sdk.js" data-key="iek_oYNmSmglKJTtwcB1AHUMdI2XDxW98DHP"></script>' . "\n";
+            }, 5);
         }
 
         wp_enqueue_style(
@@ -88,16 +84,6 @@ class LW_Shortcode {
             'roomsMin'        => $rooms ? min($rooms) : 1,
             'roomsMax'        => $rooms ? max($rooms) : 6,
         ]);
-    }
-
-    /**
-     * Add data-key attribute to EasierIcons SDK script tag.
-     */
-    public static function add_easiericons_data_key($tag, $handle) {
-        if ($handle === 'easiericons-sdk') {
-            $tag = str_replace(' src=', ' data-key="iek_rNzVYc9CxXGFO67HX8jqTnPpItL0PcRG" src=', $tag);
-        }
-        return $tag;
     }
 
     /**
