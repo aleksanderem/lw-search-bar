@@ -900,5 +900,40 @@
         } // end if !lwDisableStickyBar
     })();
 
-    if (!hideBeforeSearch) doSearch();
+    // ── Apply presets (archive mode) ──
+    var presets = window.lwPresets || {};
+
+    if (presets.investment && investmentSelect) {
+        investmentSelect.value = presets.investment;
+    }
+
+    if (presets.floor !== undefined) {
+        if (floorMinSelect) floorMinSelect.value = presets.floor;
+        if (floorMaxSelect) floorMaxSelect.value = presets.floor;
+    }
+
+    if (presets.status) {
+        currentStatus = presets.status;
+        // Sync status dropdown UI
+        var statusItems = document.querySelectorAll('#lw-dropdown-status .lw-dropdown__item');
+        var statusBtn = document.getElementById('lw-btn-status');
+        var statusLabel = statusBtn ? statusBtn.querySelector('.lw-toolbar-btn__label') : null;
+        for (var si = 0; si < statusItems.length; si++) {
+            var itemVal = statusItems[si].getAttribute('data-value');
+            if (itemVal === presets.status) {
+                statusItems[si].classList.add('lw-dropdown__item--active');
+                if (statusLabel) statusLabel.textContent = statusItems[si].textContent;
+                if (statusBtn) statusBtn.classList.add('lw-toolbar-btn--active');
+            } else {
+                statusItems[si].classList.remove('lw-dropdown__item--active');
+            }
+        }
+    }
+
+    if (presets.autoSearch && !hideBeforeSearch) {
+        revealResults();
+        doSearch();
+    } else if (!hideBeforeSearch) {
+        doSearch();
+    }
 })();

@@ -66,6 +66,65 @@ class LW_Search_Form_Widget extends \Elementor\Widget_Base {
 
         $this->end_controls_section();
 
+        // ── Presets (archive mode) ──
+        $this->start_controls_section('section_presets', [
+            'label' => 'Presety (tryb archiwum)',
+            'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+        ]);
+
+        $this->add_control('preset_investment_auto', [
+            'label'        => 'Wykryj inwestycję z URL',
+            'type'         => \Elementor\Controls_Manager::SWITCHER,
+            'label_on'     => 'Tak',
+            'label_off'    => 'Nie',
+            'return_value' => 'yes',
+            'default'      => '',
+            'description'  => 'Dopasuj inwestycję na podstawie domeny/URL strony do nazw ze źródeł (np. rezydencjaliwska3.pl → "Rezydencja Liwska 3").',
+        ]);
+
+        $this->add_control('preset_investment_manual', [
+            'label'       => 'Inwestycja (nadpisz ręcznie)',
+            'type'        => \Elementor\Controls_Manager::TEXT,
+            'default'     => '',
+            'description' => 'Nadpisz auto-detekcję — wpisz dokładną nazwę inwestycji.',
+            'condition'   => ['preset_investment_auto' => ''],
+        ]);
+
+        $this->add_control('preset_floor_from_archive', [
+            'label'        => 'Piętro z archiwum',
+            'type'         => \Elementor\Controls_Manager::SWITCHER,
+            'label_on'     => 'Tak',
+            'label_off'    => 'Nie',
+            'return_value' => 'yes',
+            'default'      => '',
+            'description'  => 'Automatycznie wykryj piętro z URL archiwum taksonomii (np. /pietro/3-pietro/ → piętro 3).',
+        ]);
+
+        $this->add_control('preset_status', [
+            'label'   => 'Domyślny status',
+            'type'    => \Elementor\Controls_Manager::SELECT,
+            'options' => [
+                ''              => 'Brak (używaj domyślnego)',
+                'dostepne'      => 'Dostępne',
+                'zarezerwowane' => 'Zarezerwowane',
+                'sprzedane'     => 'Sprzedane',
+            ],
+            'default' => '',
+            'description' => 'Nadpisuje domyślny status z widgetu wyników.',
+        ]);
+
+        $this->add_control('preset_auto_search', [
+            'label'        => 'Szukaj automatycznie',
+            'type'         => \Elementor\Controls_Manager::SWITCHER,
+            'label_on'     => 'Tak',
+            'label_off'    => 'Nie',
+            'return_value' => 'yes',
+            'default'      => 'yes',
+            'description'  => 'Automatycznie uruchom wyszukiwanie z presetami przy załadowaniu strony.',
+        ]);
+
+        $this->end_controls_section();
+
         // ── Style: Tytuł ──
         $this->start_controls_section('section_style_heading', [
             'label' => 'Tytuł',
@@ -320,6 +379,48 @@ class LW_Search_Form_Widget extends \Elementor\Widget_Base {
         $this->end_controls_section();
     }
 
+    /**
+     * Match current URL (domain + path) against configured investment names.
+     * E.g. rezydencjaliwska3.pl → "Rezydencja Liwska 3"
+     */
+    private static function detect_investment_from_url() {
+        $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+        $uri  = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        $url  = strtolower($host . $uri);
+        // Normalize: split into alphanumeric tokens
+        $url_normalized = preg_replace('/[^a-z0-9ąćęłńóśźż]+/u', ' ', $url);
+
+        // Collect all investment names from settings
+        $names = [];
+        $local_name = get_option('lw_investment_name', '');
+        if ($local_name) $names[] = $local_name;
+        $sources = get_option('lw_sources', []);
+        if (is_array($sources)) {
+            foreach ($sources as $src) {
+                $n = $src['name'] ?? '';
+                if ($n && !in_array($n, $names, true)) $names[] = $n;
+            }
+        }
+
+        // Sort longest first so more specific names match before generic ones
+        usort($names, function ($a, $b) { return mb_strlen($b) - mb_strlen($a); });
+
+        foreach ($names as $name) {
+            $name_normalized = strtolower(preg_replace('/[^a-z0-9ąćęłńóśźż]+/u', ' ', $name));
+            $words = array_filter(explode(' ', $name_normalized));
+            $all_match = true;
+            foreach ($words as $word) {
+                if (mb_strpos($url_normalized, $word) === false) {
+                    $all_match = false;
+                    break;
+                }
+            }
+            if ($all_match) return $name;
+        }
+
+        return '';
+    }
+
     protected function render() {
         $settings = $this->get_settings_for_display();
         $button_text = esc_html($settings['button_text']);
@@ -330,6 +431,48 @@ class LW_Search_Form_Widget extends \Elementor\Widget_Base {
 
         // Enqueue shared assets and localize data
         LW_Shortcode::enqueue_shared_assets();
+
+        // Build presets for archive mode
+        $presets = [];
+
+        // Investment: auto-detect from URL or manual override
+        $investment_auto = $settings['preset_investment_auto'] ?? '';
+        $investment_manual = $settings['preset_investment_manual'] ?? '';
+
+        if ($investment_manual && $investment_auto !== 'yes') {
+            $presets['investment'] = $investment_manual;
+        } elseif ($investment_auto === 'yes') {
+            $detected = self::detect_investment_from_url();
+            if ($detected) {
+                $presets['investment'] = $detected;
+            }
+        }
+
+        $preset_floor_auto = $settings['preset_floor_from_archive'] ?? '';
+        if ($preset_floor_auto === 'yes' && (is_tax() || is_category() || is_tag())) {
+            $term = get_queried_object();
+            if ($term && isset($term->slug)) {
+                if (preg_match('/^(\d+)/', $term->slug, $m)) {
+                    $presets['floor'] = (int) $m[1];
+                } elseif (strpos($term->slug, 'parter') !== false) {
+                    $presets['floor'] = 0;
+                }
+            }
+        }
+
+        $preset_status = $settings['preset_status'] ?? '';
+        if ($preset_status) {
+            $presets['status'] = $preset_status;
+        }
+
+        $preset_auto_search = $settings['preset_auto_search'] ?? '';
+        if ($preset_auto_search === 'yes') {
+            $presets['autoSearch'] = true;
+        }
+
+        if (!empty($presets)) {
+            echo '<script>window.lwPresets = ' . wp_json_encode($presets) . ';</script>';
+        }
         ?>
         <?php if (!empty($heading_text)) : ?>
             <<?php echo $heading_tag; ?> class="lw-search-heading"><?php echo esc_html($heading_text); ?></<?php echo $heading_tag; ?>>

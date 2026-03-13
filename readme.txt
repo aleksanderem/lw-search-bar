@@ -4,7 +4,7 @@ Tags: apartments, search, real estate
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.6.0
 
 Wyszukiwarka mieszkań dla Rezydencji Liwskiej — łączy dane z dwóch inwestycji przez REST API.
 
@@ -22,6 +22,12 @@ Dane pobierane są z lokalnego CPT `lokal` oraz z drugiej instalacji WordPress p
 4. Dodaj shortcode `[lw_search_bar]` na wybranej stronie
 
 == Changelog ==
+
+= 1.6.0 =
+* Tryb archiwum: presety inwestycji, piętra i statusu dla stron taksonomii
+* Auto-detekcja inwestycji z URL (dopasowanie domeny do nazw źródeł)
+* Auto-detekcja piętra z archiwum taksonomii (np. /pietro/3-pietro/)
+* Nowe kontrolki Elementor: sekcja "Presety (tryb archiwum)"
 
 = 1.0.0 =
 * Pierwsza wersja
